@@ -1,0 +1,25 @@
+name: "envsubst"
+description: "Substitutes the values of environment variables using envsubst"
+inputs:
+  files:
+    description: "files to substitute"
+    required: true
+branding:
+  icon: "package"
+  color: "red"
+runs:
+  using: composite
+  steps:
+    - uses: tj-actions/glob@v22
+      id: glob
+      with:
+        files: ${{ inputs.files }}
+    - shell: bash
+      run: |
+        FILES="${{ steps.glob.outputs.paths }}"
+        for file in $FILES; do
+          echo $file
+          envsubst < $file > $file.tmp
+          mv $file.tmp $file
+          cat $file
+        done

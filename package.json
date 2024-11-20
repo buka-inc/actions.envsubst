@@ -1,0 +1,9 @@
+{
+  "name": "actions.envsubst",
+  "version": "1.0.0",
+  "description": "Substitutes the values of environment variables using envsubst",
+  "scripts": {},
+  "keywords": [],
+  "author": "Val.istar.Guo <val.istar.guo@gmail.com>",
+  "license": "MIT"
+}

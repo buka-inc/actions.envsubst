@@ -1,0 +1,25 @@
+name: Test
+
+on: push
+
+jobs:
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./
+        with:
+          files: ./templates/**/*.json
+        env:
+          VALUE: "Hello World"
+          SUB_VALUE: "HELLO"
+          SUB_SUB_VALUE: "WORLD"
+      - run: |
+          VALUE=$(jq '.key' ./templates/test.json)
+          SUB_VALUE=$(jq '.key' ./templates/sub/test.json)
+          SUB_SUB_VALUE=$(jq '.key' ./templates/sub/sub/test.json)
+
+          [[ $VALUE = '"Hello World"' ]] || exit 1
+          [[ $SUB_VALUE = '"HELLO"' ]] || exit 1
+          [[ $SUB_SUB_VALUE = '"WORLD"' ]] || exit 1
